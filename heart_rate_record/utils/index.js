@@ -3,7 +3,7 @@ const HeartRateRecord = require("../models/HeartRateRecord");
 
 async function getHeartRate(req, res) {
   try {
-    const heartRates = await HeartRateRecord.find({ userId: req.user.id });
+    const heartRates = await HeartRateRecord.find({ userId: req.query.userId });
     res.json({ heartRates });
   } catch (err) {
     res.status(500).json({
@@ -14,7 +14,10 @@ async function getHeartRate(req, res) {
 
 async function getHeartRateDetail(req, res) {
   try {
-    const heartRate = await HeartRateRecord.findById(req.params.id);
+    const heartRate = await HeartRateRecord.findOne({
+      _id: req.params.id,
+      userId: req.query.userId
+    })
     res.json({ heartRate });
   } catch (err) {
     res.status(500).json({
@@ -27,9 +30,9 @@ async function createHeartRate(req, res) {
   try {
     const { heartRate, status } = req.body;
 
-    // Crate new heart rate
+    // create new heart rate
     const newHeartRate = new HeartRateRecord({
-      userId: req.user.id,
+      userId: req.query.userId,
       heartRate,
       status
     });

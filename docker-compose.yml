@@ -9,7 +9,7 @@ services:
       - DB_URI=mongodb://db/user
       - SECRET_KEY=heart-rate-monitor
   heart_rate_record:
-    container_name: heart_rate_record
+    container_name: heart_rate_record_service
     build: "./heart_rate_record"
     depends_on: 
       - db

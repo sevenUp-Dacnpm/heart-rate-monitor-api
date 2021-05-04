@@ -62,7 +62,9 @@ app.get("/users", auth, (req, res) => {
 
 // get heart rate record
 app.get("/heart_rate_record", auth, (req, res) => {
-  fetch("http://heart_rate_record:8000/")
+  fetch(`http://heart_rate_record:8000/?userId=${req.user.id}`, {
+    headers: { 'userId': req.user.id }
+  })
     .then(obj => obj.json())
     .then(json => res.json(json))
     .catch(err => res.json({ error: err.message }))
@@ -70,7 +72,9 @@ app.get("/heart_rate_record", auth, (req, res) => {
 
 // get heart rate record
 app.get("/heart_rate_record/:id", auth, (req, res) => {
-  fetch(`http://heart_rate_record:8000/${req.params.id}`)
+  fetch(`http://heart_rate_record:8000/${req.params.id}?userId=${req.user.id}`, {
+    headers: { 'userId': req.user.id }
+  })
     .then(obj => obj.json())
     .then(json => res.json(json))
     .catch(err => res.json({ error: err.message }))
@@ -78,7 +82,7 @@ app.get("/heart_rate_record/:id", auth, (req, res) => {
 
 // create heart rate record
 app.post("/heart_rate_record", auth, (req, res) => {
-  fetch("http://heart_rate_record:8000/", {
+  fetch(`http://heart_rate_record:8000/?userId=${req.user.id}`, {
     method: "POST",
     body: JSON.stringify(req.body),
     headers: { 'Content-Type': 'application/json' }

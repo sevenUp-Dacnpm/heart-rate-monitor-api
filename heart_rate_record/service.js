@@ -20,6 +20,9 @@ const utils = require("./utils");
   }
 })(process.env.DB_URI);
 
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 app.route("/")
   .get(utils.getHeartRate)
   .post(utils.createHeartRate)
