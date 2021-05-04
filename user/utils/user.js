@@ -26,6 +26,8 @@ async function getUserDetail(req, res) {
 }
 
 async function register(req, res) {
+  console.log('register');
+  console.log(req.body);
   try {
     const { username, password, profile } = req.body;
 
