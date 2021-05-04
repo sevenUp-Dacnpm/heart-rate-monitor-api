@@ -1,14 +1,13 @@
 // models
-const User = require("../../users/models/User");
 const HeartRateRecord = require("../models/HeartRateRecord");
 
 async function getHeartRate(req, res) {
   try {
-    const heartRates = await HeartRateRecord.find();
+    const heartRates = await HeartRateRecord.find({ userId: req.user.id });
     res.json({ heartRates });
   } catch (err) {
     res.status(500).json({
-      msg: "Server Error"
+      msg: "server error"
     });
   }
 }
@@ -19,7 +18,7 @@ async function getHeartRateDetail(req, res) {
     res.json({ heartRate });
   } catch (err) {
     res.status(500).json({
-      msg: "Server Error"
+      msg: "server error"
     });
   }
 }
@@ -42,7 +41,7 @@ async function createHeartRate(req, res) {
   } catch (err) {
     console.log(err.message);
     res.status(500).json({
-      msg: "Server Error"
+      msg: "server error"
     });
   }
 }

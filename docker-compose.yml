@@ -8,6 +8,13 @@ services:
     environment:
       - DB_URI=mongodb://db/user
       - SECRET_KEY=heart-rate-monitor
+  heart_rate_record:
+    container_name: heart_rate_record
+    build: "./heart_rate_record"
+    depends_on: 
+      - db
+    environment:
+      - DB_URI=mongodb://db/heart_rate_record
   gateway:
     container_name: gateway
     build: "./gateway"
@@ -16,6 +23,7 @@ services:
     depends_on: 
       - db
       - user
+      - heart_rate_record
     environment:
       - SECRET_KEY=heart-rate-monitor
   db:

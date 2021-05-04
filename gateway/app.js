@@ -60,4 +60,33 @@ app.get("/users", auth, (req, res) => {
     .catch(err => res.json({ error: err.message }))
 })
 
+// get heart rate record
+app.get("/heart_rate_record", auth, (req, res) => {
+  fetch("http://heart_rate_record:8000/")
+    .then(obj => obj.json())
+    .then(json => res.json(json))
+    .catch(err => res.json({ error: err.message }))
+})
+
+// get heart rate record
+app.get("/heart_rate_record/:id", auth, (req, res) => {
+  fetch(`http://heart_rate_record:8000/${req.params.id}`)
+    .then(obj => obj.json())
+    .then(json => res.json(json))
+    .catch(err => res.json({ error: err.message }))
+})
+
+// create heart rate record
+app.post("/heart_rate_record", auth, (req, res) => {
+  fetch("http://heart_rate_record:8000/", {
+    method: "POST",
+    body: JSON.stringify(req.body),
+    headers: { 'Content-Type': 'application/json' }
+  })
+    .then(obj => obj.json())
+    .then(json => res.json(json))
+    .catch(err => res.json({ error: err.message }))
+})
+
+
 app.listen(8000, () => console.log("gateway is running"));
