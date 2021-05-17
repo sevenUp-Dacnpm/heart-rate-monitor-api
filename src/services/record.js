@@ -1,9 +1,9 @@
-// models
-const HeartRateRecord = require("../models/HeartRateRecord");
+const Record = require("../models/Record");
 
-async function getHeartRate(req, res) {
+async function getHeartRates(req, res) {
   try {
-    const heartRates = await HeartRateRecord.find({ userId: req.query.userId });
+    console.log(req.user);
+    const heartRates = await Record.find({ userId: req.user.id });
     res.json({ heartRates });
   } catch (err) {
     res.status(500).json({
@@ -14,10 +14,7 @@ async function getHeartRate(req, res) {
 
 async function getHeartRateDetail(req, res) {
   try {
-    const heartRate = await HeartRateRecord.findOne({
-      _id: req.params.id,
-      userId: req.query.userId
-    })
+    const heartRate = await Record.findById(req.params.id);
     res.json({ heartRate });
   } catch (err) {
     res.status(500).json({
@@ -31,8 +28,8 @@ async function createHeartRate(req, res) {
     const { heartRate, status } = req.body;
 
     // create new heart rate
-    const newHeartRate = new HeartRateRecord({
-      userId: req.query.userId,
+    const newHeartRate = new Record({
+      userId: req.user.id,
       heartRate,
       status
     });
@@ -50,7 +47,7 @@ async function createHeartRate(req, res) {
 }
 
 module.exports = {
-  getHeartRate,
+  getHeartRates,
   getHeartRateDetail,
   createHeartRate
 }
