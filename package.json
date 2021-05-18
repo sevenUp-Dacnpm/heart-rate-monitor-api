@@ -5,7 +5,8 @@
   "main": "src/app.js",
   "scripts": {
     "start": "node src/app.js",
-    "dev": "nodemon src/app.js"
+    "dev": "nodemon src/app.js",
+    "test": "mocha --recursive --exit"
   },
   "dependencies": {
     "bcrypt": "^5.0.1",
@@ -15,7 +16,11 @@
     "mongoose": "^5.12.9"
   },
   "devDependencies": {
+    "chai": "^4.3.4",
     "heroku": "^7.53.1",
-    "nodemon": "^2.0.7"
+    "mocha": "^8.4.0",
+    "mockgoose": "^8.0.4",
+    "nodemon": "^2.0.7",
+    "supertest": "^6.1.3"
   }
 }
