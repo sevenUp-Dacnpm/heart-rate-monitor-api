@@ -1,13 +1,23 @@
 const User = require("../models/User");
 
-async function getUsers(req, res) {
+async function getUsers() {
+  let returnModel = {}; // code; message; data
   try {
     const users = await User.find();
-    res.json({ users });
+    //update returnModel
+    returnModel = {
+      'code': 200,
+      'message': 'Successful!',
+      'data': users 
+    }
   } catch (err) {
-    res.status(500).json({
-      msg: "server error"
-    });
+    //update returnModel
+    returnModel = {
+      'code': 400,
+      'message': 'invalid credentials!' 
+    }
+  } finally{
+    return returnModel;
   }
 }
 
