@@ -1,6 +1,3 @@
-// "use strict";
-// Object.defineProperty(exports, "__esModule", { value: true });
-
 const mongoose = require("mongoose");
 
 async function connectDB (url) {
@@ -44,7 +41,7 @@ const closeDB = async () => {
 }
 // exports.closeDB = closeDB;
 
-module.exports = {connectDB};
+module.exports = {connectDB, closeDB};
 
 // module.exports = {
 //   async connectDB(url) {

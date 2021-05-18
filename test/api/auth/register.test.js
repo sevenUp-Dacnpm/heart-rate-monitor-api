@@ -4,7 +4,7 @@ const {expect} = require('chai');
 const request = require('supertest');
 
 // const conn = require('../../../src/loaders/mongoose.js');
-const {connectDB} = require('../../../src/loaders/mongoose');
+const {connectDB, closeDB} = require('../../../src/loaders/mongoose');
 
 console.log(connectDB);
 
@@ -18,13 +18,14 @@ describe('POST /register', () => {
             .catch((err) => done(err));
     })
 
-    // after((done) => {
-    //     closeDB()
-    //         .then(() => done())
-    //         .catch((err) => done(err));
-    // })
+    after((done) => {
+        closeDB()
+            .then(() => done())
+            .catch((err) => done(err));
+    })
 
     it('OK, creating a new user account', (done) => {
+        
         request(app).post('/register')
             .send({
                 "username": "long9ka2",
