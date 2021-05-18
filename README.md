@@ -170,7 +170,7 @@ POST [/heart_rate_records]()
 }
 ```
 ## Get Records
-GET [/heart_rates_records]()
+GET [/heart_rate_records]()
 **Require Header 'Authorization'**
 * Response
 ```json
