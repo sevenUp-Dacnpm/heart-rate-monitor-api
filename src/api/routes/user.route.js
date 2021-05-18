@@ -1,8 +1,8 @@
 const router = require('express').Router();
-//const auth = require("./middlewares/auth");
-const userService = require("../../services/user");
+const auth = require("../middlewares/auth");
+const userService = require("../../services/user.service");
 
-router.get("/", async (req,res) => {
+router.get("/",auth, async (req,res) => {
     //handle req input api
 
     //handle bussiness login

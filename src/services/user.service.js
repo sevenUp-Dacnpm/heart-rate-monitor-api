@@ -21,14 +21,25 @@ async function getUsers() {
   }
 }
 
-async function getUserDetail(req, res) {
+async function getUserDetail(id) {
+  let returnModel = {}; // code; message; data
   try {
     const user = await User.findById(req.params.id);
-    res.json({ user });
+    
+    //update returnModel
+     returnModel = {
+      'code': 200,
+      'message': 'Successful!',
+      'data': user 
+    };
   } catch (err) {
-    res.status(500).json({
-      msg: "server error"
-    });
+    //update returnModel
+    returnModel = {
+      'code': 400,
+      'message': 'invalid credentials!' 
+    }
+  } finally {
+    return returnModel;
   }
 }
 
