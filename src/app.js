@@ -1,6 +1,6 @@
 const express = require("express");
 const config = require("./config");
-const api = require("./api");
+//const api = require("./api");
 
 // loaders
 const connectDB = require("./loaders/mongoose");
@@ -10,9 +10,10 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+require('./api/index')(app);
 
 const startServ = () => {
-    app.use(api);
+    //app.use(api);
     connectDB(config.dbUri);
 }
 

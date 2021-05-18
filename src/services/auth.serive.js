@@ -4,23 +4,34 @@ const jwt = require("jsonwebtoken");
 
 const User = require("../models/User");
 
-async function verify(req, res) {
+async function verify() {
+  let returnModel = {};
   try {
     const user = await User.findById(req.user.id);
+     //update returnModel
+    returnModel = {
+      'code': 200,
+      'message': 'Successful!',
+      'data': users 
+    }
     if (user) {
       res.json({ user });
     }
   } catch (err) {
-    res.status(400).json({
-      msg: "invalid credentials"
-    });
+    returnModel = {
+      'code': 400,
+      'message': 'Invalid credentials!'
+    }
+  }finally{
+    return returnModel;
   }
 }
 
 
-async function login(req, res) {
+async function login(req) {
+  let returnModel = {};
   try {
-    const { username, password } = req.body;
+    const { username, password } = req;
     const user = await User.findOne({ username });
     if (!user) {
       throw new Error();
