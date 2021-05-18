@@ -13,12 +13,12 @@ app.use(express.urlencoded({ extended: true }));
 require('./api/index')(app);
 
 const startServ = () => {
-    //app.use(api);
-    connectDB(config.dbUri);
+  require('./api')(app); // load api
+  connectDB(config.dbUri);
 }
 
 app.listen(config.port, () => {
-    console.log(`server listening on port ${config.port}`);
+  console.log(`server listening on port ${config.port}`);
 })
 
 startServ();

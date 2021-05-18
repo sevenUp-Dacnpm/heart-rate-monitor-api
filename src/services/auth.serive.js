@@ -4,39 +4,35 @@ const jwt = require("jsonwebtoken");
 
 const User = require("../models/User");
 
-async function verify() {
-  let returnModel = {};
+async function verify(id) {
+  let returnModel = {}; // code; message; data
   try {
-    const user = await User.findById(req.user.id);
-     //update returnModel
+    const user = await User.findById(id);
+    //update returnModel
     returnModel = {
       'code': 200,
       'message': 'Successful!',
-      'data': users 
-    }
-    if (user) {
-      res.json({ user });
+      'data': user
     }
   } catch (err) {
+    //update returnModel
     returnModel = {
       'code': 400,
-      'message': 'Invalid credentials!'
+      'message': 'invalid credentials!'
     }
-  }finally{
+  } finally {
     return returnModel;
   }
 }
 
-
-async function login(req) {
-  let returnModel = {};
+async function login(formData) {
+  let returnModel = {}; // code; message; data
   try {
-    const { username, password } = req;
-    const user = await User.findOne({ username });
+    const user = await User.findOne({ username: formData.username });
     if (!user) {
       throw new Error();
     }
-    const isMatch = await bcrypt.compare(password, user.password);
+    const isMatch = await bcrypt.compare(formData.password, user.password);
     if (isMatch) {
       // create new token
       const token = jwt.sign(
@@ -44,42 +40,53 @@ async function login(req) {
         config.secretKey,
         { expiresIn: 1800 }
       );
-
-      res.json({ user, token });
+      //update returnModel
+      returnModel = {
+        'code': 200,
+        'message': 'Successful!',
+        'data': { user, token }
+      }
     } else {
       throw new Error();
     }
   } catch (err) {
-    res.status(400).json({
-      msg: "invalid credentials"
-    });
+    //update returnModel
+    returnModel = {
+      'code': 400,
+      'message': 'invalid credentials!'
+    }
+  } finally {
+    return returnModel;
   }
 }
 
-async function register(req, res) {
+async function register(formData) {
+  let returnModel = {}; // code; message; data
   try {
-    const { username, password, profile } = req.body;
-
     // hash password
     const salt = await bcrypt.genSalt(10);
-    const hashPassword = await bcrypt.hash(password, salt);
-
+    const hashPassword = await bcrypt.hash(formData.password, salt);
     // create new user
     const newUser = new User({
-      username,
+      username: formData.username,
       password: hashPassword,
-      profile
+      profile: formData.profile
     });
     await newUser.save();
-
-    res.status(201).json({
-      user: newUser
-    });
+    //update returnModel
+    returnModel = {
+      'code': 200,
+      'message': 'Successful!',
+      'data': newUser
+    }
   } catch (err) {
-    console.log(err.message);
-    res.status(500).json({
-      msg: "server error"
-    });
+    //update returnModel
+    returnModel = {
+      'code': 500,
+      'message': 'server error'
+    }
+  } finally {
+    return returnModel;
   }
 }
 

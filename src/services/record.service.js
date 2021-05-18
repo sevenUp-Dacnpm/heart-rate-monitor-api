@@ -1,48 +1,71 @@
 const Record = require("../models/Record");
 
-async function getHeartRates(req, res) {
+async function getHeartRates(userId) {
+  let returnModel = {}; // code; message; data
   try {
-    console.log(req.user);
-    const heartRates = await Record.find({ userId: req.user.id });
-    res.json({ heartRates });
+    const heartRates = await Record.find({ userId });
+    //update returnModel
+    returnModel = {
+      'code': 200,
+      'message': 'Successful!',
+      'data': heartRates
+    }
   } catch (err) {
-    res.status(500).json({
-      msg: "server error"
-    });
+    //update returnModel
+    returnModel = {
+      'code': 500,
+      'message': 'server error'
+    }
+  } finally {
+    return returnModel;
   }
 }
 
-async function getHeartRateDetail(req, res) {
+async function getHeartRateDetail(id) {
+  let returnModel = {}; // code; message; data
   try {
-    const heartRate = await Record.findById(req.params.id);
-    res.json({ heartRate });
+    const heartRate = await Record.findById(id);
+    //update returnModel
+    returnModel = {
+      'code': 200,
+      'message': 'Successful!',
+      'data': heartRate
+    }
   } catch (err) {
-    res.status(500).json({
-      msg: "server error"
-    });
+    //update returnModel
+    returnModel = {
+      'code': 500,
+      'message': 'server error'
+    }
+  } finally {
+    return returnModel;
   }
 }
 
-async function createHeartRate(req, res) {
+async function createHeartRate(userId, formData) {
+  let returnModel = {}; // code; message; data
   try {
-    const { heartRate, status } = req.body;
-
     // create new heart rate
     const newHeartRate = new Record({
-      userId: req.user.id,
-      heartRate,
-      status
+      userId,
+      heartRate: formData.heartRate,
+      status: formData.status
     });
     await newHeartRate.save();
-
-    res.status(201).json({
-      heartRate: newHeartRate
-    });
+    //update returnModel
+    returnModel = {
+      'code': 201,
+      'message': 'Successful!',
+      'data': newHeartRate
+    }
   } catch (err) {
-    console.log(err.message);
-    res.status(500).json({
-      msg: "server error"
-    });
+    //update returnModel
+    returnModel = {
+      'code': 500,
+      'message': 'server error'
+    }
+  } finally {
+    return returnModel;
   }
 }
 
