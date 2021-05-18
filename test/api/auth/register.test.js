@@ -5,6 +5,9 @@ const request = require('supertest');
 
 // const conn = require('../../../src/loaders/mongoose.js');
 const {connectDB} = require('../../../src/loaders/mongoose');
+
+console.log(connectDB);
+
 const config = require('../../../src/config');
 const app = require('../../../src/app');
 

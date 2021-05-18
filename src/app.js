@@ -3,7 +3,7 @@ const config = require("./config");
 //const api = require("./api");
 
 // loaders
-const connectDB = require("./loaders/mongoose");
+const {connectDB} = require("./loaders/mongoose");
 
 const app = express();
 
@@ -12,9 +12,9 @@ app.use(express.urlencoded({ extended: true }));
 
 require('./api/index')(app);
 
-const startServ = () => {
+const startServ = async () => {
   require('./api')(app); // load api
-  connectDB(config.dbUri);
+  await connectDB(config.dbUri);
 }
 
 app.listen(config.port, () => {

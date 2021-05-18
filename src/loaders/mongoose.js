@@ -3,7 +3,7 @@
 
 const mongoose = require("mongoose");
 
-const connectDB = async (url) => {
+async function connectDB (url) {
 
   if(process.env.NODE_ENV ==='test') {
     const Mockgoose = require('mockgoose').Mockgoose;
@@ -44,7 +44,7 @@ const closeDB = async () => {
 }
 // exports.closeDB = closeDB;
 
-module.exports = connectDB;
+module.exports = {connectDB};
 
 // module.exports = {
 //   async connectDB(url) {
