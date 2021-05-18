@@ -19,7 +19,7 @@ router.post("/login", async (req, res) => {
   const resVerify = await authService.login(req.body);
 
   //handle return for client
-  console.log(resVerify);
+  // console.log(resVerify);
   return res.status(resVerify.code).json(resVerify.data);
 });
 
