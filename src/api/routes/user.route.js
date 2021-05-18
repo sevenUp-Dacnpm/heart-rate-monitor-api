@@ -1,6 +1,6 @@
 const router = require('express').Router();
-const auth = require("./middlewares/auth");
-const userService = require("../services/user");
+//const auth = require("./middlewares/auth");
+const userService = require("../../services/user");
 
 router.get("/", async (req,res) => {
     //handle req input api
@@ -14,3 +14,5 @@ router.get("/", async (req,res) => {
 
 
 //router.get("/user/:id", auth, userServ.getUserDetail);
+
+module.exports = router;
