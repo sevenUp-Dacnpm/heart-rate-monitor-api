@@ -24,7 +24,7 @@ async function getUsers() {
 async function getUserDetail(id) {
   let returnModel = {}; // code; message; data
   try {
-    const user = await User.findById(req.params.id);
+    const user = await User.findById(id);
     
     //update returnModel
      returnModel = {

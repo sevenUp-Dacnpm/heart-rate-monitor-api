@@ -127,7 +127,7 @@ GET[/users]()
 }
 ```
 ## Get User By ID
-GET[/user/:id]()
+GET[/users/:id]()
 **Require Header 'Authorization'**
 * Response
 ```json
@@ -148,7 +148,7 @@ GET[/user/:id]()
 }
 ```
 ## Create Record
-POST [/heart_rate_record]()
+POST [/heart_rate_records]()
 **Require Header 'Authorization'**
 * Request
 ```json
@@ -170,7 +170,7 @@ POST [/heart_rate_record]()
 }
 ```
 ## Get Records
-GET [/heart_rates_record]()
+GET [/heart_rates_records]()
 **Require Header 'Authorization'**
 * Response
 ```json
@@ -194,7 +194,7 @@ GET [/heart_rates_record]()
 }
 ```
 ## Get Record By ID
-GET [/heart_rate_record/:id]()
+GET [/heart_rate_records/:id]()
 **Require Header 'Authorization'**
 * Response
 ```json

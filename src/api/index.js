@@ -1,8 +1,5 @@
-// router.get("/heart_rates_record", auth, recordServ.getHeartRates);
-// router.get("/heart_rate_record/:id", auth, recordServ.getHeartRateDetail);
-// router.post("/heart_rate_record", auth, recordServ.createHeartRate);
-
-
-module.exports = function(app) {
-    app.use('/users',require('./routes/user.route'));
+module.exports = function (app) {
+  app.use('/', require('./routes/auth.route'));
+  app.use('/users', require('./routes/user.route'));
+  app.use('/heart_rate_records', require('./routes/record.route'));
 };
