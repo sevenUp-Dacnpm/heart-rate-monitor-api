@@ -26,14 +26,12 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - name: Install server dependencies
       run: npm i
-          
+    - name: Unit Testing
+      run: npm test
   Unit_Test:
     needs: build
     runs-on: ubuntu-latest
-
-    steps:
-    - name: Unit Testing
-      run: npm test
+    
   Deloy:
     needs: Unit_Test
     runs-on: ubuntu-latest
