@@ -8,15 +8,15 @@ async function getUsers() {
     returnModel = {
       'code': 200,
       'message': 'Successful!',
-      'data': users 
+      'data': users
     }
   } catch (err) {
     //update returnModel
     returnModel = {
       'code': 400,
-      'message': 'invalid credentials!' 
+      'message': 'invalid credentials!'
     }
-  } finally{
+  } finally {
     return returnModel;
   }
 }
@@ -25,40 +25,41 @@ async function getUserDetail(id) {
   let returnModel = {}; // code; message; data
   try {
     const user = await User.findById(id);
-    
+
     //update returnModel
-     returnModel = {
+    returnModel = {
       'code': 200,
       'message': 'Successful!',
-      'data': user 
+      'data': user
     };
   } catch (err) {
     //update returnModel
     returnModel = {
       'code': 400,
-      'message': 'invalid credentials!' 
+      'message': 'invalid credentials!'
     }
   } finally {
     return returnModel;
   }
 }
 
-async function updateUser(id, ...fields) {
+async function updateUser(id, profile) {
   let returnModel = {}; // code; message; data
+
   try {
-    const user = await User.findByIdAndUpdate(id, ...feilds);
-    
+    const user = await User.findByIdAndUpdate(id, { profile }, { new: true }).exec();
+
     //update returnModel
-     returnModel = {
+    returnModel = {
       'code': 200,
       'message': 'Update successful!',
-      'data': user 
+      'data': user
     };
   } catch (err) {
     //update returnModel
     returnModel = {
       'code': 400,
-      'message': 'invalid credentials!' 
+      'message': 'invalid credentials!'
     }
   } finally {
     return returnModel;
