@@ -43,7 +43,30 @@ async function getUserDetail(id) {
   }
 }
 
+async function updateUser(id, ...fields) {
+  let returnModel = {}; // code; message; data
+  try {
+    const user = await User.findByIdAndUpdate(id, ...feilds);
+    
+    //update returnModel
+     returnModel = {
+      'code': 200,
+      'message': 'Update successful!',
+      'data': user 
+    };
+  } catch (err) {
+    //update returnModel
+    returnModel = {
+      'code': 400,
+      'message': 'invalid credentials!' 
+    }
+  } finally {
+    return returnModel;
+  }
+}
+
 module.exports = {
   getUsers,
-  getUserDetail
+  getUserDetail,
+  updateUser
 }
