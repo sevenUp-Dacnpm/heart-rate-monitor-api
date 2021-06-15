@@ -26,7 +26,20 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - name: Install server dependencies
       run: npm i
-    - name: Deloy to staging
+          
+  Unit_Test:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Unit Testing
+      run: npm test
+  Deloy:
+    needs: Unit_Test
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Deloy to host
       uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
       with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
