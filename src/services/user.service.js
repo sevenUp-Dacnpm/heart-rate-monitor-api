@@ -1,22 +1,22 @@
-const User = require("../models/User");
+const User = require('../models/User');
 
 async function getUsers() {
   let returnModel = {}; // code; message; data
   try {
     const users = await User.find();
-    //update returnModel
+    // update returnModel
     returnModel = {
-      'code': 200,
-      'message': 'Successful!',
-      'data': users 
-    }
+      code: 200,
+      message: 'Successful!',
+      data: users,
+    };
   } catch (err) {
-    //update returnModel
+    // update returnModel
     returnModel = {
-      'code': 400,
-      'message': 'invalid credentials!' 
-    }
-  } finally{
+      code: 400,
+      message: 'invalid credentials!',
+    };
+  } finally {
     return returnModel;
   }
 }
@@ -25,19 +25,19 @@ async function getUserDetail(id) {
   let returnModel = {}; // code; message; data
   try {
     const user = await User.findById(id);
-    
-    //update returnModel
-     returnModel = {
-      'code': 200,
-      'message': 'Successful!',
-      'data': user 
+
+    // update returnModel
+    returnModel = {
+      code: 200,
+      message: 'Successful!',
+      data: user,
     };
   } catch (err) {
-    //update returnModel
+    // update returnModel
     returnModel = {
-      'code': 400,
-      'message': 'invalid credentials!' 
-    }
+      code: 400,
+      message: 'invalid credentials!',
+    };
   } finally {
     return returnModel;
   }
@@ -45,5 +45,5 @@ async function getUserDetail(id) {
 
 module.exports = {
   getUsers,
-  getUserDetail
-}
+  getUserDetail,
+};

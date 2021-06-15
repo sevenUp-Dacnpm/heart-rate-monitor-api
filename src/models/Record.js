@@ -1,22 +1,22 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const RecordSchema = new mongoose.Schema({
   userId: {
     type: mongoose.SchemaTypes.ObjectId,
-    ref: "user",
-    required: true
+    ref: 'user',
+    required: true,
   },
   heartRate: {
     type: Number,
-    required: true
+    required: true,
   },
   date: {
     type: Date,
-    default: Date.now()
+    default: Date.now(),
   },
   state: {
-    type: String
-  }
+    type: String,
+  },
 });
 
-module.exports = mongoose.model("record", RecordSchema);
+module.exports = mongoose.model('record', RecordSchema);

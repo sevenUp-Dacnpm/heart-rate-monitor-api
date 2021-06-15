@@ -1,25 +1,24 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
+const Mockgoose = require('mockgoose').Mockgoose;
 
-async function connectDB (url) {
-
-  if(process.env.NODE_ENV ==='test') {
-    const Mockgoose = require('mockgoose').Mockgoose;
+async function connectDB(url) {
+  if (process.env.NODE_ENV === 'test') {
     const mockgoose = new Mockgoose(mongoose);
 
-    mockgoose.prepareStorage()
-      .then(async () => {
-        try {
-          await mongoose.connect(url, {
-            useCreateIndex: true,
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
-            useFindAndModify: false,
-          });
-          console.log("connected database");
-        } catch (err) {
-          console.error(err.message);
-        }
-      })
+    mockgoose.prepareStorage().then(async () => {
+      try {
+        await mongoose.connect(url, {
+          useCreateIndex: true,
+          useNewUrlParser: true,
+          useUnifiedTopology: true,
+          useFindAndModify: false,
+        });
+        // console.log('connected database');
+      } catch (err) {
+        // console.error(err.message);
+        throw new Error();
+      }
+    });
   } else {
     try {
       await mongoose.connect(url, {
@@ -28,36 +27,14 @@ async function connectDB (url) {
         useUnifiedTopology: true,
         useFindAndModify: false,
       });
-      console.log("connected database");
+      // console.log('connected database');
     } catch (err) {
-      console.error(err.message);
+      // console.error(err.message);
+      throw new Error();
     }
   }
 }
-// // exports.connectDB = connectDB;
 
-const closeDB = async () => {
-  return await mongoose.disconnect();
-}
-// exports.closeDB = closeDB;
+const closeDB = () => mongoose.disconnect();
 
-module.exports = {connectDB, closeDB};
-
-// module.exports = {
-//   async connectDB(url) {
-//     try {
-//       await mongoose.connect(url, {
-//         useCreateIndex: true,
-//         useNewUrlParser: true,
-//         useUnifiedTopology: true,
-//         useFindAndModify: false,
-//       });
-//       console.log("connected database");
-//     } catch (err) {
-//       console.error(err.message);
-//     }
-//   },
-//   async closeDB() {
-//     return await mongoose.disconnect();
-//   }
-// };
+module.exports = { connectDB, closeDB };

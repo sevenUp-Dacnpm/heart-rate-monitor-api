@@ -1,5 +1,5 @@
-const config = require("../../config");
-const jwt = require("jsonwebtoken");
+const jwt = require('jsonwebtoken');
+const config = require('../../config');
 
 async function auth(req, res, next) {
   try {
@@ -12,7 +12,7 @@ async function auth(req, res, next) {
     next();
   } catch (err) {
     res.status(401).json({
-      msg: "authorization denied",
+      msg: 'authorization denied',
     });
   }
 }

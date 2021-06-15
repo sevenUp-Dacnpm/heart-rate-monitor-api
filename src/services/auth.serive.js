@@ -1,25 +1,25 @@
-const config = require("../config");
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const config = require('../config');
 
-const User = require("../models/User");
+const User = require('../models/User');
 
 async function verify(id) {
   let returnModel = {}; // code; message; data
   try {
     const user = await User.findById(id);
-    //update returnModel
+    // update returnModel
     returnModel = {
-      'code': 200,
-      'message': 'Successful!',
-      'data': user
-    }
+      code: 200,
+      message: 'Successful!',
+      data: user,
+    };
   } catch (err) {
-    //update returnModel
+    // update returnModel
     returnModel = {
-      'code': 400,
-      'message': 'invalid credentials!'
-    }
+      code: 400,
+      message: 'invalid credentials!',
+    };
   } finally {
     return returnModel;
   }
@@ -35,26 +35,24 @@ async function login(formData) {
     const isMatch = await bcrypt.compare(formData.password, user.password);
     if (isMatch) {
       // create new token
-      const token = jwt.sign(
-        { id: user._id },
-        config.secretKey,
-        { expiresIn: 1800 }
-      );
-      //update returnModel
+      const token = jwt.sign({ id: user._id }, config.secretKey, {
+        expiresIn: 1800,
+      });
+      // update returnModel
       returnModel = {
-        'code': 200,
-        'message': 'Successful!',
-        'data': { user, token }
-      }
+        code: 200,
+        message: 'Successful!',
+        data: { user, token },
+      };
     } else {
       throw new Error();
     }
   } catch (err) {
-    //update returnModel
+    // update returnModel
     returnModel = {
-      'code': 400,
-      'message': 'invalid credentials!'
-    }
+      code: 400,
+      message: 'invalid credentials!',
+    };
   } finally {
     return returnModel;
   }
@@ -70,21 +68,21 @@ async function register(formData) {
     const newUser = new User({
       username: formData.username,
       password: hashPassword,
-      profile: formData.profile
+      profile: formData.profile,
     });
     await newUser.save();
-    //update returnModel
+    // update returnModel
     returnModel = {
-      'code': 200,
-      'message': 'Successful!',
-      'data': newUser
-    }
+      code: 200,
+      message: 'Successful!',
+      data: newUser,
+    };
   } catch (err) {
-    //update returnModel
+    // update returnModel
     returnModel = {
-      'code': 500,
-      'message': 'server error'
-    }
+      code: 500,
+      message: 'server error',
+    };
   } finally {
     return returnModel;
   }
@@ -93,5 +91,5 @@ async function register(formData) {
 module.exports = {
   verify,
   login,
-  register
-}
+  register,
+};

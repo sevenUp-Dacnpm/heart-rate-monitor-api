@@ -1,0 +1,18 @@
+{
+  "env": {
+    "es6": true
+  },
+  "extends": ["airbnb-base"],
+  "parserOptions": {
+    "ecmaVersion": 2017
+  },
+  "rules": {
+    "no-undef": "off",
+    "no-unsafe-finally": "off",
+    "linebreak-style": "off",
+    "prefer-destructuring": "off",
+    "no-underscore-dangle": "off",
+    "global-require": "off",
+    "func-names": "off"
+  }
+}
