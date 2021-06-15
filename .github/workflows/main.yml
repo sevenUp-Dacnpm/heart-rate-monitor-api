@@ -26,20 +26,14 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - name: Install server dependencies
       run: npm i
-    - name: Deloy to staging
+    - name: Unit Testing
+      run: npm test
+    - name: Deloy to host
       uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
       with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-          heroku_app_name: "academy-for-test" #Must be unique in Heroku
-          heroku_email: "lequanghai540@gmail.com"
+          heroku_app_name: "heart-rate-monitor-api" #Must be unique in Heroku
+          heroku_email: "giangsauhu3@gmail.com"
           procfile: "web: npm start"
-      env:
-          HD_DB_HOST: us-cdbr-east-04.cleardb.com
-          HD_DB_PORT: 3306
-          HD_DB_USER: ${{secrets.DB_USER}}
-          HD_DB_PASSWORD: ${{secrets.DB_PASSWORD}}
-          HD_DB_NAME: heroku_2918cd1316c63a1
-          HD_NODE_ENVIROMMENT: pro
-          HD_HOST:  ${{secrets.HOST_NAME}}
-          HD_HOST_NAME: ${{secrets.HOST_NAME}}
-          HD_URL: ${{secrets.HOST_NAME}}
+ 
+   
