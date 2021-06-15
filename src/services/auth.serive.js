@@ -80,6 +80,7 @@ async function register(formData) {
       'data': newUser
     }
   } catch (err) {
+    console.log(err.message);
     //update returnModel
     returnModel = {
       'code': 500,
