@@ -78,7 +78,7 @@ async function register(formData) {
       data: newUser,
     };
   } catch (err) {
-    // update returnModel
+    //update returnModel
     returnModel = {
       code: 500,
       message: 'server error',
