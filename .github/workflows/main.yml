@@ -28,15 +28,6 @@ jobs:
       run: npm i
     - name: Unit Testing
       run: npm test
-  Unit_Test:
-    needs: build
-    runs-on: ubuntu-latest
-    
-  Deloy:
-    needs: Unit_Test
-    runs-on: ubuntu-latest
-    
-    steps:
     - name: Deloy to host
       uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
       with:
@@ -44,3 +35,5 @@ jobs:
           heroku_app_name: "heart-rate-monitor-api" #Must be unique in Heroku
           heroku_email: "giangsauhu3@gmail.com"
           procfile: "web: npm start"
+ 
+   
