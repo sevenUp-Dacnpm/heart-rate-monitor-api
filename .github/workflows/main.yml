@@ -26,8 +26,6 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - name: Install server dependencies
       run: npm i
-    - name: Unit Testing
-      run: npm test
     - name: Deloy to host
       uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
       with:
