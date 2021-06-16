@@ -1,134 +1,130 @@
-process.env.NODE_ENV = 'test';
+//process.env.NODE_ENV = 'test';
+//const request = require('supertest');
+//const { connectDB, closeDB } = require('../../src/loaders/mongoose');
 
-const { expect } = require('chai');
-const request = require('supertest');
+//const config = require('../../src/config');
 
-const { connectDB, closeDB } = require('../../src/loaders/mongoose');
-
-const config = require('../../src/config');
+//const User = require('../../src/models/User');
 const app = require('../../src/app');
+const randomstring = require("randomstring");
+
+const chaiHttp = require('chai-http');
+const chai = require('chai');
+const should = chai.should();
+chai.use(chaiHttp);
+
+
 
 describe('TEST API', () => {
   let token = '';
   let userId = '';
-  before((done) => {
-    connectDB(config.dbUri)
-      .then(() => done())
-      .catch((err) => done(err));
-  });
-
-  after((done) => {
-    closeDB()
-      .then(() => done())
-      .catch((err) => done(err));
-  });
+  const username = randomstring.generate(7);
 
   it('OK, creating a new user account', (done) => {
-    request(app)
-      .post('/register')
-      .send({
-        username: 'long9ka',
-        password: '123456',
-        profile: {
-          fullName: 'Danh Phi Long 22',
-          gender: 'male',
-          weight: 100,
-          height: 100,
-          dob: '2021-01-01',
-        },
-      })
-      .then((res) => {
-        const body = res.body;
-        expect(body).to.contain.property('profile');
-        expect(body).to.contain.property('_id');
-        expect(body).to.contain.property('username');
-        expect(body).to.contain.property('password');
-        done();
-      })
-      .catch((err) => done(err));
+    chai.request(app)
+    .post('/register')
+    .send({
+      username: username,
+      password: '123456',
+      profile: {
+        fullName: 'Danh Phi Long 22',
+        gender: 'male',
+        weight: 100,
+        height: 100,
+        dob: '2021-01-01',
+      }
+    }).end((err,res)=>{
+      if(err){
+        console.log(err);
+      }
+      res.should.have.status(200);
+      res.body.should.be.a('object');
+      res.body.should.have.property('profile');
+      res.body.should.have.property('_id');
+      res.body.should.have.property('username');
+      done();
+    })
   });
 
   it('OK, login successfully and get a token', (done) => {
-    request(app)
+    chai.request(app)
       .post('/login')
       .send({
-        username: 'long9ka',
+        username: username,
         password: '123456',
-      })
-      .then((res) => {
-        const body = res.body;
-        token = body.token;
-        expect(body).to.contain.property('user');
-        expect(body).to.contain.property('token');
+      }).end((err,res) => {
+        if(err){
+          console.log(err);
+        }
+        res.should.have.status(200);
+        res.body.should.be.a('object');
+        res.body.should.have.property('user');
+        res.body.should.have.property('token');
         done();
       })
-      .catch((err) => done(err));
   });
 
   it('Fail, login is falure', (done) => {
-    request(app)
+    chai.request(app)
       .post('/login')
       .send({
-        username: 'long9ka1',
-        password: '123456',
-      })
-      .expect(400)
-      .then(() => {
+        username: username,
+        password: '111',
+      }).end((err,res) => {
+        if(err){
+          console.log(err);
+        }
+        res.should.have.status(400);
         done();
       })
-      .catch((err) => done(err));
   });
 
-  it('OK, verify token successfully', (done) => {
-    request(app)
-      .get('/verify_token')
-      .set('authorization', token)
-      .then((res) => {
-        const body = res.body;
-        expect(body).to.contain.property('profile');
-        expect(body).to.contain.property('_id');
-        expect(body).to.contain.property('username');
-        expect(body).to.contain.property('password');
-        done();
-      })
-      .catch((err) => done(err));
-  });
+  // it('OK, verify token successfully', (done) => {
+  //   chai.request(app)
+  //     .get('/verify_token')
+  //     .set('authorization', token)
+  //     .end((err,res) => {
+  //       console.log(err);
+  //       done();
+  //     })
+  //     .catch((err) => done(err));
+  // });
 
-  it('OK, Get user list', (done) => {
-    request(app)
-      .get('/users')
-      .set('authorization', token)
-      .then((res) => {
-        const body = res.body;
-        userId = body[0]._id;
-        expect(+body.length).to.equal(1);
-        done();
-      })
-      .catch((err) => done(err));
-  });
+  // it('OK, Get user list', (done) => {
+  //   request(app)
+  //     .get('/users')
+  //     .set('authorization', token)
+  //     .then((res) => {
+  //       const body = res.body;
+  //       userId = body[0]._id;
+  //       expect(+body.length).to.equal(1);
+  //       done();
+  //     })
+  //     .catch((err) => done(err));
+  // });
 
-  it('Fail, Get user list failure because wrong auth', (done) => {
-    request(app)
-      .get('/users')
-      .expect(401)
-      .then(() => {
-        done();
-      })
-      .catch((err) => done(err));
-  });
+  // it('Fail, Get user list failure because wrong auth', (done) => {
+  //   request(app)
+  //     .get('/users')
+  //     .expect(401)
+  //     .then(() => {
+  //       done();
+  //     })
+  //     .catch((err) => done(err));
+  // });
 
-  it('OK, get user with specific id', (done) => {
-    request(app)
-      .get(`/users/${userId}`)
-      .set('authorization', token)
-      .then((res) => {
-        const body = res.body;
-        expect(body).to.contain.property('profile');
-        expect(body).to.contain.property('_id');
-        expect(body).to.contain.property('username');
-        expect(body).to.contain.property('password');
-        done();
-      })
-      .catch((err) => done(err));
-  });
+  // it('OK, get user with specific id', (done) => {
+  //   request(app)
+  //     .get(`/users/${userId}`)
+  //     .set('authorization', token)
+  //     .then((res) => {
+  //       const body = res.body;
+  //       expect(body).to.contain.property('profile');
+  //       expect(body).to.contain.property('_id');
+  //       expect(body).to.contain.property('username');
+  //       expect(body).to.contain.property('password');
+  //       done();
+  //     })
+  //     .catch((err) => done(err));
+  // });
 });
