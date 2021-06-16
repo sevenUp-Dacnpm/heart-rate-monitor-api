@@ -13,6 +13,8 @@
     "prefer-destructuring": "off",
     "no-underscore-dangle": "off",
     "global-require": "off",
-    "func-names": "off"
+    "func-names": "off",
+    "no-unused-vars": "off",
+    "comma-dangle": "off"
   }
 }

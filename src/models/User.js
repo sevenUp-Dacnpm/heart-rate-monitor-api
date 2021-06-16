@@ -13,25 +13,20 @@ const Userchema = new mongoose.Schema({
   profile: {
     fullName: {
       type: String,
-      required: true,
     },
     gender: {
       type: String,
       enum: ['male', 'female'],
-      required: true,
     },
     weight: {
       type: Number,
-      required: true,
     },
     height: {
       type: Number,
-      required: true,
     },
     dob: {
       type: Date,
       default: Date.now(),
-      required: true,
     },
   },
 });

@@ -30,13 +30,16 @@ async function login(formData) {
   try {
     const user = await User.findOne({ username: formData.username });
     if (!user) {
-      throw new Error();
+      return {
+        code: 400,
+        message: 'User is already exists',
+      };
     }
     const isMatch = await bcrypt.compare(formData.password, user.password);
     if (isMatch) {
       // create new token
       const token = jwt.sign({ id: user._id }, config.secretKey, {
-        expiresIn: 1800,
+        expiresIn: 1400 * 3600,
       });
       // update returnModel
       returnModel = {
@@ -59,11 +62,19 @@ async function login(formData) {
 }
 
 async function register(formData) {
-  let returnModel = {}; // code; message; data
+  // const returnModel = {}; // code; message; data
   try {
+    const user = await User.findOne({ username: formData.username });
+    if (user) {
+      return {
+        code: 400,
+        message: 'Username is already exists!',
+      };
+    }
     // hash password
     const salt = await bcrypt.genSalt(10);
     const hashPassword = await bcrypt.hash(formData.password, salt);
+
     // create new user
     const newUser = new User({
       username: formData.username,
@@ -71,20 +82,20 @@ async function register(formData) {
       profile: formData.profile,
     });
     await newUser.save();
+
     // update returnModel
-    returnModel = {
+    return {
       code: 200,
       message: 'Successful!',
       data: newUser,
     };
   } catch (err) {
     // update returnModel
-    returnModel = {
+    console.log(err);
+    return {
       code: 500,
       message: 'server error',
     };
-  } finally {
-    return returnModel;
   }
 }
 
