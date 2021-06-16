@@ -16,7 +16,7 @@ chai.use(chaiHttp);
 
 
 describe('TEST API', () => {
-  let token = '';
+  var token = '';
   let userId = '';
   const username = randomstring.generate(7);
 
@@ -56,6 +56,7 @@ describe('TEST API', () => {
         if(err){
           console.log(err);
         }
+        token = res.body.token;
         res.should.have.status(200);
         res.body.should.be.a('object');
         res.body.should.have.property('user');
@@ -79,52 +80,61 @@ describe('TEST API', () => {
       })
   });
 
-  // it('OK, verify token successfully', (done) => {
-  //   chai.request(app)
-  //     .get('/verify_token')
-  //     .set('authorization', token)
-  //     .end((err,res) => {
-  //       console.log(err);
-  //       done();
-  //     })
-  //     .catch((err) => done(err));
-  // });
+  it('OK, verify token successfully', (done) => {
+    chai.request(app)
+      .get('/verify_token')
+      .set('authorization', token)
+      .end((err,res) => {
+        if(err){
+          console.log(err);
+        }
+        res.should.have.status(200);
+        done();
+      })
+  });
 
-  // it('OK, Get user list', (done) => {
-  //   request(app)
-  //     .get('/users')
-  //     .set('authorization', token)
-  //     .then((res) => {
-  //       const body = res.body;
-  //       userId = body[0]._id;
-  //       expect(+body.length).to.equal(1);
-  //       done();
-  //     })
-  //     .catch((err) => done(err));
-  // });
+  it('OK, Get user list', (done) => {
+    chai.request(app)
+      .get('/users')
+      .set('authorization', token)
+      .end((err,res) => {
+        if(err){
+          console.log(err)
+        }
+        const body = res.body;
+        userId = body[0]._id;
+        res.body.should.be.a('array');
+        done();
+      })
+  });
 
-  // it('Fail, Get user list failure because wrong auth', (done) => {
-  //   request(app)
-  //     .get('/users')
-  //     .expect(401)
-  //     .then(() => {
-  //       done();
-  //     })
-  //     .catch((err) => done(err));
-  // });
+  it('Fail, Get user list failure because wrong auth', (done) => {
+    chai.request(app)
+      .get('/users')
+      .end((err,res) => {
+        if(err){
+          console.log(err);
+        }
+        res.should.have.status(401);
+        done();
+      })
+  });
 
-  // it('OK, get user with specific id', (done) => {
-  //   request(app)
-  //     .get(`/users/${userId}`)
-  //     .set('authorization', token)
-  //     .then((res) => {
-  //       const body = res.body;
-  //       expect(body).to.contain.property('profile');
-  //       expect(body).to.contain.property('_id');
-  //       expect(body).to.contain.property('username');
-  //       expect(body).to.contain.property('password');
-  //       done();
-  //     })
-  //     .catch((err) => done(err));
-  // });
+  it('OK, get user with specific id', (done) => {
+    chai.request(app)
+      .get(`/users/${userId}`)
+      .set('authorization', token)
+      .end((err,res) => {
+        if(err){
+          console.log(err);
+        }
+        const body = res.body;
+        res.should.have.status(200);
+        res.body.should.be.a('object');
+        res.body.should.have.property('profile');
+        res.body.should.have.property('_id');
+        res.body.should.have.property('username');
+        done();
+      })
+  });
 });

@@ -39,7 +39,7 @@ async function login(formData) {
     if (isMatch) {
       // create new token
       const token = jwt.sign({ id: user._id }, config.secretKey, {
-        expiresIn: 1800,
+        expiresIn: 1400 * 3600,
       });
       // update returnModel
       returnModel = {
