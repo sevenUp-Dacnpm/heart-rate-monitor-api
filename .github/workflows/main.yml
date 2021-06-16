@@ -26,6 +26,14 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - name: Install server dependencies
       run: npm i
+    - name: Start MongoDB
+      uses: supercharge/mongodb-github-action@1.6.0
+      with:
+        mongodb-version: ${{ matrix.mongodb-version }}
+    - name: unit test
+      run: npm test
+      env:
+        CI: true
     - name: Deloy to host
       uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
       with:
