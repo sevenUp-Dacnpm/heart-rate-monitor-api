@@ -1,5 +1,5 @@
 # Command    
-```npm start``` or ```yarn start```
+```npm start```
 >[Host](https://heart-rate-monitor-api.herokuapp.com) 
 # API
 ## Verify User
