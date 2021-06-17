@@ -50,6 +50,8 @@ async function createHeartRate(userId, formData) {
       userId,
       heartRate: formData.heartRate,
       status: formData.status,
+      note: formData.note,
+      createdAt: formData.createdAt
     });
     await newHeartRate.save();
     // update returnModel

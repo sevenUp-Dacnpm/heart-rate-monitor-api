@@ -17,6 +17,12 @@ const RecordSchema = new mongoose.Schema({
   state: {
     type: String,
   },
+  note: {
+    type: String
+  },
+  createdAt: {
+    type: Date
+  }
 });
 
 module.exports = mongoose.model('record', RecordSchema);
