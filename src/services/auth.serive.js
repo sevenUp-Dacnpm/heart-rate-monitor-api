@@ -42,6 +42,7 @@ async function login(formData) {
         expiresIn: 1400 * 3600,
       });
       // update returnModel
+      //user.password = undefined;
       returnModel = {
         code: 200,
         message: 'Successful!',
@@ -84,6 +85,7 @@ async function register(formData) {
     await newUser.save();
 
     // update returnModel
+    user.password = undefined;
     return {
       code: 200,
       message: 'Successful!',

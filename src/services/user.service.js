@@ -3,7 +3,7 @@ const User = require('../models/User');
 async function getUsers() {
   let returnModel = {}; // code; message; data
   try {
-    const users = await User.find();
+    const users = await User.find().select('-password');
     // update returnModel
     returnModel = {
       code: 200,
@@ -27,6 +27,7 @@ async function getUserDetail(id) {
     const user = await User.findById(id);
 
     // update returnModel
+    user.password = undefined;
     returnModel = {
       code: 200,
       message: 'Successful!',
@@ -54,6 +55,7 @@ async function updateUser(id, profile) {
     ).exec();
 
     // update returnModel
+    user.password = undefined;
     returnModel = {
       code: 200,
       message: 'Update successful!',
