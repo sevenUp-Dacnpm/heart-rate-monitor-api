@@ -231,3 +231,29 @@ GET [/users/profile]()
     "__v": 0
 }
 ```
+
+## Get Record By ID
+PUT [/users/profile]()
+**Require Header 'Authorization'**
+* Request
+```json
+{
+    "dob": "2021-06-15T15:40:32.740Z",
+    "fullName": "Quang Hai 8",
+    "gender": "female"
+}
+```
+* Response
+```json
+{
+    "profile": {
+        "dob": "2021-06-15T15:40:32.740Z",
+        "fullName": "Quan Hai 8",
+        "gender": "female"
+    },
+    "_id": "60c8c49ddaaea80015a08c83",
+    "username": "quanghai29",
+    "password": "$2b$10$vVyK6MbY4bT32Q82Gwxh0.QxpM/cssx5ZOy5yYOGRcR/NyINws9Q.",
+    "__v": 0
+}
+```

@@ -85,7 +85,7 @@ async function register(formData) {
     await newUser.save();
 
     // update returnModel
-    user.password = undefined;
+    delete newUser.password;
     return {
       code: 200,
       message: 'Successful!',
