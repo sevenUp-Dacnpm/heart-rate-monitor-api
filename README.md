@@ -232,7 +232,7 @@ GET [/users/profile]()
 }
 ```
 
-## Get Record By ID
+## Update profile
 PUT [/users/profile]()
 **Require Header 'Authorization'**
 * Request
